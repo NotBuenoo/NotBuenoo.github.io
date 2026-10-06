@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>bueno</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { height: 100%; margin: 0; background: #12151a; }
+  iframe { display: block; width: 100%; height: 100%; border: 0; }
+</style>
+</head>
+<body>
+  <iframe id="site" title="bueno"></iframe>
+  <script>
+    var ORIGIN = "https://server.tail8858fd.ts.net";
+    var frame = document.getElementById("site");
+
+    // Load the same path inside the iframe that the visitor asked for
+    frame.src = ORIGIN + location.pathname + location.search + location.hash;
+
+    // Keep the address bar in sync as the visitor clicks around inside the site
+    window.addEventListener("message", function (e) {
+      if (e.origin !== ORIGIN) return;
+      var d = e.data;
+      if (!d || typeof d.path !== "string" || d.path.charAt(0) !== "/") return;
+      if (d.path !== location.pathname) history.replaceState(null, "", d.path);
+      if (typeof d.title === "string") document.title = d.title;
+    });
+  </script>
+  <noscript><a href="https://server.tail8858fd.ts.net">Open the site directly</a></noscript>
+</body>
+</html>
